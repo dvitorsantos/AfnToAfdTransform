@@ -12,7 +12,7 @@ public class Transformador {
     }
 
     //não finalizado
-    public Automato toAFD(Automato automato) {
+    public static void toAFD(Automato automato) {
         List<Transicao> transicoes = automato.getTransicoes();
         Iterator<Transicao> iterator = transicoes.iterator();
 
@@ -20,12 +20,50 @@ public class Transformador {
             Transicao transicao = iterator.next();
             if (transicao.getEstadosDestino().size() > 1) {
                 StringBuilder novoEstadoNome = new StringBuilder();
-                List<Estado> estadosDestino = transicao.getEstadosDestino();
-                estadosDestino.forEach(estado -> System.out.println(estado.getNome()));
-                Estado novoEstado = new Estado(novoEstadoNome.toString(), false, transicao.getEstado().isFinal());
+                Boolean novoEstadoIsInicial = false;
+                Boolean novoEstadoIsFinal = false;
+                List<Estado> estadosDestino = new ArrayList<>(transicao.getEstadosDestino());
+
+                for (Estado estado : estadosDestino) {
+                    novoEstadoNome.append(estado.getNome());
+                    novoEstadoIsInicial = estado.isInicial();
+                    novoEstadoIsFinal = estado.isFinal();
+                }
+
+                Estado novoEstado = new Estado(novoEstadoNome.toString(), novoEstadoIsInicial, novoEstadoIsFinal);
+
+                for (Transicao transicaoReceberNovoDestino : transicoes) {
+                    List<Estado> transicaoReceberNovoDestinoEstadosDestino = transicaoReceberNovoDestino.getEstadosDestino();
+                    if (transicaoReceberNovoDestinoEstadosDestino.equals(estadosDestino)) {
+                        transicaoReceberNovoDestinoEstadosDestino.clear();
+                        transicaoReceberNovoDestinoEstadosDestino.add(novoEstado);
+                    }
+                }
+
+                List<Transicao> transicoesAdicionadas = new ArrayList<>();
+
+                for (Transicao transicaoAtual : transicoes) {
+                    for (Estado estado : estadosDestino) {
+                        if (transicaoAtual.getEstado().equals(estado)) {
+                            boolean transicaoJaAdicionada = false;
+                            for (Transicao transicaoAdiconada : transicoesAdicionadas) {
+                                if (transicaoAdiconada.getEstado().equals(novoEstado) && transicaoAdiconada.getSimbolo().equals(transicaoAtual.getSimbolo())) {
+                                    transicaoAdiconada.getEstadosDestino().addAll(transicaoAtual.getEstadosDestino());
+                                    transicaoJaAdicionada = true;
+                                }
+                            }
+
+                            if (!transicaoJaAdicionada) {
+                                Transicao novaTransicao = new Transicao(novoEstado, transicaoAtual.getSimbolo(), transicaoAtual.getEstadosDestino());
+                                transicoesAdicionadas.add(novaTransicao);
+                            }
+                        }
+                    }
+                }
+
+                transicoes.addAll(transicoesAdicionadas);
+                iterator = transicoes.iterator();
             }
         }
-
-        return null;
     }
 }
