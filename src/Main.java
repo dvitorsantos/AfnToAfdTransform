@@ -7,28 +7,6 @@ import java.util.*;
 
 public class Main {
 
-
-    public static void imprimirDivs() {
-        System.out.println("=================================================================================");
-    }
-
-    public static void restricoeseObservacoes() {
-        imprimirDivs();
-        System.out.println("                            restrições afn de entrada".toUpperCase(Locale.ROOT));
-        imprimirDivs();
-        System.out.println("O autômato deve ter no maximo:".toUpperCase(Locale.ROOT));
-        System.out.println("-4 estados;".toUpperCase(Locale.ROOT));
-        System.out.println("-8 transições".toUpperCase(Locale.ROOT));
-        System.out.println("-3 símbolos".toUpperCase(Locale.ROOT));
-        imprimirDivs();
-        System.out.println("                             observações".toUpperCase(Locale.ROOT));
-        imprimirDivs();
-        System.out.println("-os estados, por definição, serão chamados de q0, q1, q2, q3;".toUpperCase(Locale.ROOT));
-        System.out.println(("-os símbolos, por definição, podem ser apenas números naturais(1, 2, 3) ou" +
-                "letras do alfabeto(a, b, c)").toUpperCase(Locale.ROOT));
-
-    }
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
