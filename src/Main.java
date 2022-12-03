@@ -35,13 +35,32 @@ public class Main {
         System.out.println("conversor de autômatos finitos não determinísticos para autômatos finitos determinísticos.".toUpperCase(Locale.ROOT));
         boolean exit = false;
 
-        List<Estado> estados = Main.definirEstados();
-        List<String> alfabeto = Main.definirAlfabeto();
-        List<Transicao> transicoes = Main.definirTransicoes(estados, alfabeto);
+        List<Estado> estados = new ArrayList<>();
+        List<String> alfabeto = new ArrayList<>();
 
+        estados.add(new Estado("q0", true, false));
+        estados.add(new Estado("q1", false, false));
+        estados.add(new Estado("q2", false, false));
+        estados.add(new Estado("q3", false, false));
+        estados.add(new Estado("q4", false, true));
+        estados.add(new Estado("q5", false, true));
+        estados.add(new Estado("q6", false, true));
+
+        alfabeto.add("a");
+        alfabeto.add("b");
+        alfabeto.add("c");
+        alfabeto.add("d");
+
+        List<Transicao> transicoes = Main.definirTransicoes(estados, alfabeto);
         Automato automato = new Automato(transicoes);
 
-        System.out.println(automato);
+        Transformador.toAFD(automato);
+
+        for (Transicao transicao : automato.getTransicoes()) {
+            if (!transicao.getEstadosDestino().isEmpty()) {
+                System.out.println(transicao);
+            }
+        }
     }
 
     public static List<Estado> definirEstados() {
