@@ -4,25 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Transicao {
-    private Estado estado;
+    private List<Estado> estadoOrigem;
     private String simbolo;
     private List<Estado> estadosDestino;
 
-    //pretendo utilizar na hora de verificar se o estado já foi avaliado no algoritmo
-    private boolean flag;
+    public Transicao() {
+        this.estadoOrigem = new ArrayList<>();
+        this.estadosDestino = new ArrayList<>();
+    }
 
-    public Transicao(Estado estado, String simbolo, List<Estado> estadosDestino) {
-        this.estado = estado;
+    public Transicao(List<Estado> estadoOrigem, String simbolo, List<Estado> estadosDestino) {
+        this.estadoOrigem = estadoOrigem;
         this.simbolo = simbolo;
         this.estadosDestino = estadosDestino;
     }
 
-    public Estado getEstado() {
-        return estado;
+    public List<Estado> getEstadoOrigem() {
+        return estadoOrigem;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setEstadoOrigem(List<Estado> estadoOrigem) {
+        this.estadoOrigem = estadoOrigem;
     }
 
     public String getSimbolo() {
@@ -41,19 +43,11 @@ public class Transicao {
         this.estadosDestino = estadosDestino;
     }
 
-    public boolean getFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
-
     @Override
     public String toString() {
         return "Transicao{" +
-                "estado=" + estado +
-                ", simbolo=" + simbolo +
+                "estadoOrigem=" + estadoOrigem +
+                ", simbolo='" + simbolo + '\'' +
                 ", estadosDestino=" + estadosDestino +
                 '}';
     }
